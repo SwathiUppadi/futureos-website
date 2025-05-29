@@ -68,6 +68,125 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Modal Functions
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Form submission handlers
+function submitWorkshopForm(formData) {
+    // In a real application, you would send this to your backend
+    console.log('Workshop Form Data:', formData);
+    
+    // For now, we'll show a success message and send an email alert
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+                success: true,
+                message: 'Workshop booking request submitted successfully! We will contact you within 24 hours.'
+            });
+        }, 1000);
+    });
+}
+
+function submitCommunityForm(formData) {
+    console.log('Community Form Data:', formData);
+    
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+                success: true,
+                message: 'Welcome to the FutureOS community! Check your email for next steps.'
+            });
+        }, 1000);
+    });
+}
+
+function submitAmbassadorForm(formData) {
+    console.log('Ambassador Form Data:', formData);
+    
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+                success: true,
+                message: 'Brand Ambassador application submitted! We will review and contact you soon.'
+            });
+        }, 1000);
+    });
+}
+
+// Show loading state
+function showFormLoading(form) {
+    form.classList.add('form-loading');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+}
+
+// Hide loading state
+function hideFormLoading(form) {
+    form.classList.remove('form-loading');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = false;
+    // Reset button text based on form type
+    if (form.id === 'workshopForm') {
+        submitBtn.textContent = 'Submit Request';
+    } else if (form.id === 'communityForm') {
+        submitBtn.textContent = 'Join Community';
+    } else if (form.id === 'ambassadorForm') {
+        submitBtn.textContent = 'Submit Application';
+    }
+}
+
+// Show success/error message
+function showMessage(form, message, isSuccess = true) {
+    // Remove existing messages
+    const existingMessage = form.querySelector('.success-message, .error-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create new message
+    const messageDiv = document.createElement('div');
+    messageDiv.className = isSuccess ? 'success-message' : 'error-message';
+    messageDiv.textContent = message;
+    
+    // Insert at the beginning of the form
+    form.insertBefore(messageDiv, form.firstChild);
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+        if (messageDiv.parentNode) {
+            messageDiv.remove();
+        }
+    }, 5000);
+}
+
+// Legacy functions (kept for backward compatibility)
+function bookWorkshop(workshopType) {
+    openModal('workshopModal');
+}
+
+function applyAmbassador() {
+    openModal('ambassadorModal');
+}
+
+function registerEvent(eventName) {
+    openModal('workshopModal');
+}
+
 // Form handling (if forms are added later)
 function handleFormSubmit(event) {
     event.preventDefault();
@@ -81,24 +200,6 @@ function openContactModal() {
     console.log('Contact modal would open here');
 }
 
-// Workshop booking functionality
-function bookWorkshop(workshopType) {
-    // Add workshop booking logic
-    alert(`Thank you for your interest in ${workshopType}! We will contact you with more details.`);
-}
-
-// Campus ambassador application
-function applyAmbassador() {
-    // Add application logic
-    alert('Thank you for your interest in becoming a Campus Ambassador! We will send you the application form.');
-}
-
-// Event registration
-function registerEvent(eventName) {
-    // Add event registration logic
-    alert(`Thank you for registering for ${eventName}! We will send you the details soon.`);
-}
-
 // Add click handlers for CTA buttons
 document.addEventListener('DOMContentLoaded', function() {
     // Book workshop buttons
@@ -106,17 +207,27 @@ document.addEventListener('DOMContentLoaded', function() {
         if (button.textContent.includes('Book') || button.textContent.includes('Workshop')) {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                bookWorkshop('AI Workshop');
+                openModal('workshopModal');
+            });
+        }
+    });
+
+    // Join community buttons
+    document.querySelectorAll('a[href="#contact"], a[href="#get-involved"]').forEach(button => {
+        if (button.textContent.includes('Join') && button.textContent.includes('Community')) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal('communityModal');
             });
         }
     });
 
     // Campus ambassador buttons
-    document.querySelectorAll('a[href="#get-involved"]').forEach(button => {
-        if (button.textContent.includes('Ambassador')) {
+    document.querySelectorAll('a[href="#get-involved"], a[href="#contact"]').forEach(button => {
+        if (button.textContent.includes('Ambassador') || button.textContent.includes('Become')) {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                applyAmbassador();
+                openModal('ambassadorModal');
             });
         }
     });
@@ -126,8 +237,120 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             const eventTitle = this.closest('.event-card').querySelector('h3').textContent;
-            registerEvent(eventTitle);
+            if (button.textContent.includes('Apply')) {
+                openModal('ambassadorModal');
+            } else {
+                openModal('workshopModal');
+            }
         });
+    });
+
+    // Close modal when clicking the X button
+    document.querySelectorAll('.close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            const modalId = this.getAttribute('data-modal');
+            closeModal(modalId);
+        });
+    });
+
+    // Close modal when clicking outside
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal(this.id);
+            }
+        });
+    });
+
+    // Handle form submissions
+    document.getElementById('workshopForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        
+        showFormLoading(this);
+        
+        try {
+            const result = await submitWorkshopForm(data);
+            hideFormLoading(this);
+            
+            if (result.success) {
+                showMessage(this, result.message, true);
+                this.reset();
+                setTimeout(() => closeModal('workshopModal'), 2000);
+            } else {
+                showMessage(this, result.message, false);
+            }
+        } catch (error) {
+            hideFormLoading(this);
+            showMessage(this, 'An error occurred. Please try again.', false);
+        }
+    });
+
+    document.getElementById('communityForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Handle checkbox values for interests
+        const interests = Array.from(this.querySelectorAll('input[name="interests"]:checked'))
+            .map(cb => cb.value);
+        data.interests = interests;
+        
+        showFormLoading(this);
+        
+        try {
+            const result = await submitCommunityForm(data);
+            hideFormLoading(this);
+            
+            if (result.success) {
+                showMessage(this, result.message, true);
+                this.reset();
+                setTimeout(() => closeModal('communityModal'), 2000);
+            } else {
+                showMessage(this, result.message, false);
+            }
+        } catch (error) {
+            hideFormLoading(this);
+            showMessage(this, 'An error occurred. Please try again.', false);
+        }
+    });
+
+    document.getElementById('ambassadorForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        
+        showFormLoading(this);
+        
+        try {
+            const result = await submitAmbassadorForm(data);
+            hideFormLoading(this);
+            
+            if (result.success) {
+                showMessage(this, result.message, true);
+                this.reset();
+                setTimeout(() => closeModal('ambassadorModal'), 2000);
+            } else {
+                showMessage(this, result.message, false);
+            }
+        } catch (error) {
+            hideFormLoading(this);
+            showMessage(this, 'An error occurred. Please try again.', false);
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const openModal = document.querySelector('.modal.show');
+            if (openModal) {
+                closeModal(openModal.id);
+            }
+        }
     });
 });
 

@@ -343,6 +343,232 @@
         </div>
     </footer>
 
+    <!-- Modal Forms -->
+    <!-- Book Workshop Modal -->
+    <div id="workshopModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Book a Workshop</h2>
+                <span class="close" data-modal="workshopModal">&times;</span>
+            </div>
+            <form id="workshopForm" class="modal-form">
+                <div class="form-group">
+                    <label for="workshop-name">Full Name *</label>
+                    <input type="text" id="workshop-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="workshop-email">Email *</label>
+                    <input type="email" id="workshop-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="workshop-phone">Phone Number *</label>
+                    <input type="tel" id="workshop-phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="workshop-college">College/Organization *</label>
+                    <input type="text" id="workshop-college" name="college" required>
+                </div>
+                <div class="form-group">
+                    <label for="workshop-type">Workshop Type *</label>
+                    <select id="workshop-type" name="workshopType" required>
+                        <option value="">Select Workshop Type</option>
+                        <option value="genai">Generative AI Workshop</option>
+                        <option value="ml-basics">Machine Learning Basics</option>
+                        <option value="ai-projects">AI Project Building</option>
+                        <option value="custom">Custom Workshop</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="workshop-participants">Expected Participants</label>
+                    <select id="workshop-participants" name="participants">
+                        <option value="20-50">20-50 students</option>
+                        <option value="50-100">50-100 students</option>
+                        <option value="100-200">100-200 students</option>
+                        <option value="200+">200+ students</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="workshop-date">Preferred Date</label>
+                    <input type="date" id="workshop-date" name="preferredDate">
+                </div>
+                <div class="form-group">
+                    <label for="workshop-message">Additional Requirements</label>
+                    <textarea id="workshop-message" name="message" rows="4" placeholder="Any specific requirements or questions..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('workshopModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Join Community Modal -->
+    <div id="communityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Join Our Community</h2>
+                <span class="close" data-modal="communityModal">&times;</span>
+            </div>
+            <form id="communityForm" class="modal-form">
+                <div class="form-group">
+                    <label for="community-name">Full Name *</label>
+                    <input type="text" id="community-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="community-email">Email *</label>
+                    <input type="email" id="community-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="community-phone">Phone Number *</label>
+                    <input type="tel" id="community-phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="community-college">College/University *</label>
+                    <input type="text" id="community-college" name="college" required>
+                </div>
+                <div class="form-group">
+                    <label for="community-course">Course/Department *</label>
+                    <select id="community-course" name="course" required>
+                        <option value="">Select Your Course</option>
+                        <option value="engineering">Engineering (CSE/IT/ECE)</option>
+                        <option value="pharma">Pharmacy</option>
+                        <option value="mba">MBA</option>
+                        <option value="bsc">B.Sc (Computer Science/IT)</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="community-year">Year of Study *</label>
+                    <select id="community-year" name="year" required>
+                        <option value="">Select Year</option>
+                        <option value="1st">1st Year</option>
+                        <option value="2nd">2nd Year</option>
+                        <option value="3rd">3rd Year</option>
+                        <option value="4th">4th Year</option>
+                        <option value="final">Final Year</option>
+                        <option value="pg">Post Graduate</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="community-interests">AI Interests (Select multiple)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interests" value="machine-learning"> Machine Learning
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interests" value="data-science"> Data Science
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interests" value="nlp"> Natural Language Processing
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interests" value="computer-vision"> Computer Vision
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interests" value="robotics"> Robotics
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interests" value="web-dev"> Web Development with AI
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="community-experience">AI/Programming Experience</label>
+                    <select id="community-experience" name="experience">
+                        <option value="beginner">Beginner (No prior experience)</option>
+                        <option value="basic">Basic (Some tutorials/courses)</option>
+                        <option value="intermediate">Intermediate (Built small projects)</option>
+                        <option value="advanced">Advanced (Industry experience)</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('communityModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Join Community</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Brand Ambassador Modal -->
+    <div id="ambassadorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Become a Brand Ambassador</h2>
+                <span class="close" data-modal="ambassadorModal">&times;</span>
+            </div>
+            <form id="ambassadorForm" class="modal-form">
+                <div class="form-group">
+                    <label for="ambassador-name">Full Name *</label>
+                    <input type="text" id="ambassador-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-email">Email *</label>
+                    <input type="email" id="ambassador-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-phone">Phone Number *</label>
+                    <input type="tel" id="ambassador-phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-college">College/University *</label>
+                    <input type="text" id="ambassador-college" name="college" required>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-course">Course/Department *</label>
+                    <select id="ambassador-course" name="course" required>
+                        <option value="">Select Your Course</option>
+                        <option value="engineering">Engineering (CSE/IT/ECE)</option>
+                        <option value="pharma">Pharmacy</option>
+                        <option value="mba">MBA</option>
+                        <option value="bsc">B.Sc (Computer Science/IT)</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-year">Year of Study *</label>
+                    <select id="ambassador-year" name="year" required>
+                        <option value="">Select Year</option>
+                        <option value="2nd">2nd Year</option>
+                        <option value="3rd">3rd Year</option>
+                        <option value="4th">4th Year</option>
+                        <option value="final">Final Year</option>
+                        <option value="pg">Post Graduate</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-leadership">Leadership Experience *</label>
+                    <textarea id="ambassador-leadership" name="leadership" rows="3" required placeholder="Describe your leadership experience, clubs, events organized, etc."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-social">Social Media Presence</label>
+                    <textarea id="ambassador-social" name="social" rows="2" placeholder="LinkedIn, Instagram, YouTube channel links (if any)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-motivation">Why do you want to be a Brand Ambassador? *</label>
+                    <textarea id="ambassador-motivation" name="motivation" rows="4" required placeholder="Tell us about your passion for AI and how you plan to promote FutureOS in your college"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-commitment">Time Commitment *</label>
+                    <select id="ambassador-commitment" name="commitment" required>
+                        <option value="">Select Time Commitment</option>
+                        <option value="5-10">5-10 hours per week</option>
+                        <option value="10-15">10-15 hours per week</option>
+                        <option value="15+">15+ hours per week</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-ideas">Ideas for Campus Engagement</label>
+                    <textarea id="ambassador-ideas" name="ideas" rows="3" placeholder="Share your ideas for organizing events, workshops, or promoting AI education in your campus"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('ambassadorModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
